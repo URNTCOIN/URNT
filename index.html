@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>URNT — The community owns the vibe</title>
+<meta name="description" content="URNT is a fair-launch meme coin on TON and Solana. Ownership renounced. No CEO. No promises.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3Crect width='640' height='640' fill='%236a2cff'/%3E%3Ccircle cx='243' cy='197' r='49' fill='%23fff'/%3E%3Ccircle cx='388' cy='219' r='49' fill='%23fff'/%3E%3Cpath fill='%23fff' d='M153 313H242V398H397V313H487V405A83 83 0 0 1 404 488H236A83 83 0 0 1 153 405Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6a2cff;--p2:#5420e0;--tint:#f6f2ff;--line:#ece6fb;--ink:#14102a;--mute:#6f6a86;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--p);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px}
+section{padding:120px 0}
+h1,h2,h3{letter-spacing:-.035em;line-height:1.04;font-weight:700}
+h2{font-size:clamp(30px,4vw,44px);margin-bottom:16px}
+.lead{font-size:18px;color:var(--mute);max-width:52ch}
+
+nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+nav.s{border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em}
+.brand svg{width:28px;height:28px;border-radius:8px}
+.nl{display:flex;align-items:center;gap:28px;font-size:14px;font-weight:500;color:var(--mute)}
+.nl .ico+.ico{margin-left:-14px}
+.nl a:hover{color:var(--p)}
+
+.hero{padding:112px 0 120px;text-align:center}
+.hero .logo{width:88px;height:88px;border-radius:24px;display:block;margin:0 auto 44px}
+.hero h1{font-size:clamp(46px,8.4vw,92px);max-width:11ch;margin:0 auto 28px;letter-spacing:-.045em}
+.hero p{font-size:19px;color:var(--mute);max-width:40ch;margin:0 auto 40px}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;padding:13px 26px;border-radius:999px;font:600 15px Inter,sans-serif;border:1px solid var(--p);cursor:pointer;transition:background .15s,color .15s}
+.btn.f{background:var(--p);color:#fff}.btn.f:hover{background:var(--p2);border-color:var(--p2)}
+.btn.o{background:#fff;color:var(--p)}.btn.o:hover{background:var(--tint)}
+
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.head h2{margin:0}
+.tabs{display:flex;gap:22px;font-size:14px;font-weight:600}
+.tabs button{background:none;border:0;font:inherit;color:var(--mute);padding:6px 0;border-bottom:2px solid transparent;cursor:pointer}
+.tabs button.on{color:var(--ink);border-color:var(--p)}
+.grp{display:flex;gap:36px;flex-wrap:wrap}
+.chart-box{border:1px solid var(--line);border-radius:20px;padding:28px 28px 8px}
+.quote{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.quote b{font-size:34px;letter-spacing:-.035em;font-weight:700}
+.chg{font-size:15px;font-weight:600}.up{color:#0f9d58}.dn{color:#d93025}
+#chart{height:360px;position:relative}
+.msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--mute);font-size:15px;padding:24px}
+.stats{display:flex;gap:56px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);margin-top:8px}
+.stats small{display:block;color:var(--mute);font-size:13px}
+.stats strong{font-size:18px;font-weight:600;letter-spacing:-.02em}
+
+/* DexScreener embed (shown when our own chart can't load) */
+.embed{display:none;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.embed.show{display:block}
+.embed iframe{width:100%;height:560px;border:0;display:block}
+.chart-box.hide{display:none}
+.src{margin-top:14px;font-size:14px;color:var(--mute)}
+.src a{color:var(--p);font-weight:600}
+.src a:hover{text-decoration:underline}
+
+.manifesto{background:var(--p);color:#fff}
+.manifesto h2{font-size:clamp(36px,6vw,76px);max-width:14ch;margin-bottom:56px;letter-spacing:-.045em}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.manifesto p{font-size:18px;color:#e4d9ff;max-width:44ch}
+.manifesto .big{grid-column:1/-1;font-size:clamp(22px,3vw,32px);font-weight:600;letter-spacing:-.025em;color:#fff;max-width:none;line-height:1.3}
+
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.rules div{border-top:2px solid var(--ink);padding-top:22px}
+.rules h3{font-size:22px;margin-bottom:10px}
+.rules p{color:var(--mute);font-size:16px}
+
+.tint{background:var(--tint)}
+.ca{margin-top:48px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line)}
+.row h3{font-size:18px}
+.row code{font:500 14px ui-monospace,Menlo,Consolas,monospace;word-break:break-all;color:var(--ink)}
+.act{display:flex;gap:20px;font-size:14px;font-weight:600;color:var(--p);flex-wrap:wrap}
+.act button,.act a{background:none;border:0;font:inherit;color:inherit;cursor:pointer}
+.act :hover{color:var(--p2);text-decoration:underline}
+
+.steps{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.steps div{border-top:1px solid var(--line);padding-top:22px}
+.steps b{color:var(--p);font-weight:600;font-size:14px}
+.steps h3{font-size:22px;margin:8px 0 10px}
+.steps p{color:var(--mute);font-size:16px}
+
+details{border-bottom:1px solid var(--line);padding:24px 0}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--p);font-size:24px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:12px;color:var(--mute);max-width:60ch}
+
+footer{border-top:1px solid var(--line);padding:56px 0 48px}
+footer .wrap{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.fine{font-size:13px;color:var(--mute);max-width:56ch;margin-top:16px}
+/* social buttons */
+.ico{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);color:var(--ink);transition:background .15s,color .15s,border-color .15s,transform .15s}
+.ico svg{width:17px;height:17px}
+.ico:hover{background:var(--p);border-color:var(--p);color:#fff;transform:translateY(-2px)}
+.soc{display:flex;gap:10px;align-items:flex-start}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:10px 18px 10px 14px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--ink);transition:background .15s,color .15s,border-color .15s,transform .15s}
+.pill svg{width:16px;height:16px}
+.pill:hover{background:var(--p);border-color:var(--p);color:#fff;transform:translateY(-2px)}
+.nl .ico:hover{color:#fff}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:820px){
+  section{padding:80px 0}.hero{padding:72px 0 80px}
+  .nl a.hide{display:none}
+  .cols,.rules,.steps{grid-template-columns:1fr;gap:32px}
+  .row{grid-template-columns:1fr;gap:10px}
+  #chart{height:280px}.chart-box{padding:20px 18px 4px}.stats{gap:32px}
+  .embed iframe{height:440px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 640 640">
+    <rect width="640" height="640" fill="#6a2cff"/>
+    <circle cx="243" cy="197" r="49" fill="#fff"/>
+    <circle cx="388" cy="219" r="49" fill="#fff"/>
+    <path fill="#fff" d="M153 313H242V398H397V313H487V405A83 83 0 0 1 404 488H236A83 83 0 0 1 153 405Z"/>
+  </symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+  </symbol>
+  <symbol id="i-x" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </symbol>
+</svg>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><svg><use href="#logo"/></svg>URNT</a>
+    <div class="nl">
+      <a class="hide" href="#chart-section">Chart</a>
+      <a class="hide" href="#about">Manifesto</a>
+      <a class="hide" href="#contracts">Contracts</a>
+      <a class="hide" href="#faq">FAQ</a>
+      <a class="ico" href="https://t.me/urntcoin" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram"><svg aria-hidden="true"><use href="#i-tg"/></svg></a>
+      <a class="ico" href="https://x.com/urntcoin" target="_blank" rel="noopener" aria-label="X" title="X"><svg aria-hidden="true"><use href="#i-x"/></svg></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <svg class="logo" role="img" aria-label="URNT logo"><use href="#logo"/></svg>
+    <h1>The community owns the vibe.</h1>
+    <p>A fair-launch meme coin on TON and Solana. No CEO. No promises.</p>
+    <div class="cta">
+      <a class="btn f" id="buy-sol" target="_blank" rel="noopener">Buy on Solana</a>
+      <a class="btn o" id="buy-ton" target="_blank" rel="noopener">Buy on TON</a>
+      <a class="btn o" id="pump-btn" target="_blank" rel="noopener">Pump.fun</a>
+    </div>
+  </div>
+</header>
+
+<section id="chart-section" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head">
+      <h2>Live chart on Solana</h2>
+      <div class="grp">
+        <div class="tabs" id="rangeTabs"><button data-r="24h">24H</button><button class="on" data-r="7d">7D</button><button data-r="30d">30D</button></div>
+      </div>
+    </div>
+
+    <!-- Our own chart (GeckoTerminal data) -->
+    <div class="chart-box" id="chartBox">
+      <div class="quote"><b id="px">—</b><span class="chg" id="chg"></span></div>
+      <div id="chart"><div class="msg" id="msg">Loading chart…</div></div>
+      <div class="stats">
+        <div><small>Liquidity</small><strong id="s-liq">—</strong></div>
+        <div><small>24h volume</small><strong id="s-vol">—</strong></div>
+        <div><small>Fully diluted value</small><strong id="s-fdv">—</strong></div>
+      </div>
+    </div>
+
+    <!-- DexScreener embed: shown automatically if our own chart can't load -->
+    <div class="embed" id="embed">
+      <iframe id="embedFrame" title="URNT live chart on DexScreener" loading="lazy"></iframe>
+    </div>
+
+    <p class="src">Trade data from the Pump.fun / PumpSwap pool. <a id="pump-link" target="_blank" rel="noopener">Open on Pump.fun</a></p>
+  </div>
+</section>
+
+<section class="manifesto" id="about">
+  <div class="wrap">
+    <h2>We came here to launch a meme.</h2>
+    <div class="cols">
+      <p class="big">No CEO. No promises. No bullshit.</p>
+      <p>We officially revoked ownership authority of the token. The contract is no longer under our control. No special privileges, no hidden switches, no one pulling strings behind the scenes.</p>
+      <p>The devs stepped back, the ownership was renounced, and now it's up to the people to decide what happens next. No roadmap to sell you. No fake utility. No manufactured hype. Just a meme, a community, and a little bit of internet chaos. You either get it or you don't.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="rules">
+      <div><h3>Fair launch</h3><p>Everyone started from the same line. No presale, no insider allocation, no VIP list.</p></div>
+      <div><h3>Renounced ownership</h3><p>The keys are gone. Nobody can change the rules. Check the contract on the explorer yourself.</p></div>
+      <div><h3>Community-driven</h3><p>Memes, art, raids, ideas. If something happens, someone in the trenches made it happen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="contracts">
+  <div class="wrap">
+    <h2>Don't trust. Verify.</h2>
+    <p class="lead">Copy the contract address from this page or from our official channels. Anything else is probably a scam.</p>
+    <div class="ca">
+      <div class="row"><h3>Solana</h3><code id="ca-sol"></code><div class="act"><button data-copy="sol">Copy</button><a id="ex-sol" target="_blank" rel="noopener">Explorer</a><a id="pump-ex" target="_blank" rel="noopener">Pump.fun</a></div></div>
+      <div class="row"><h3>TON</h3><code id="ca-ton"></code><div class="act"><button data-copy="ton">Copy</button><a id="ex-ton" target="_blank" rel="noopener">Explorer</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="wrap">
+    <h2>How to buy.</h2>
+    <p class="lead">Three steps, about five minutes. Same on both chains.</p>
+    <div class="steps">
+      <div><b>Step 1</b><h3>Get a wallet</h3><p>Phantom for Solana, Tonkeeper for TON. Keep your recovery phrase offline and never share it.</p></div>
+      <div><b>Step 2</b><h3>Add SOL or TON</h3><p>Buy it on any exchange and send it to your wallet. Keep a little extra for network fees.</p></div>
+      <div><b>Step 3</b><h3>Swap for URNT</h3><p>Use Jupiter on Solana or STON.fi on TON. Paste the contract address from this page, double-check it, and swap.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="faq">
+  <div class="wrap">
+    <h2 style="margin-bottom:40px">Questions.</h2>
+    <details><summary>What is URNT?</summary><p>A meme coin. No product, no utility pitch, no company behind it.</p></details>
+    <details><summary>Who runs it?</summary><p>Nobody. The devs stepped back and renounced ownership. The community decides what happens next.</p></details>
+    <details><summary>Is there a roadmap?</summary><p>No. We're not going to sell you one. If the community wants something built, the community builds it.</p></details>
+    <details><summary>Why both TON and Solana?</summary><p>The trenches have more than one door. Same coin, same vibe, two chains.</p></details>
+    <details><summary>How do I check that ownership is renounced?</summary><p>Open the token on the explorer (links above) and look at its authorities. Verifying beats believing.</p></details>
+    <details><summary>Is this financial advice?</summary><p>No. It's a meme. Only put in what you're fine losing.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="#top" class="brand"><svg><use href="#logo"/></svg>URNT</a>
+      <p class="fine">URNT is a meme coin with no intrinsic value and no expectation of financial return. Nothing on this site is financial advice. Crypto assets are highly volatile and you can lose everything you put in. Do your own research.</p>
+    </div>
+    <div class="soc">
+      <a class="pill" href="https://t.me/urntcoin" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+      <a class="pill" href="https://x.com/urntcoin" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-x"/></svg>X</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Address copied</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightweight-charts/4.1.3/lightweight-charts.standalone.production.js"></script>
+<script>
+const CFG = {
+  sol: {
+    network: "solana",
+    contract: "5p1qAbvQSAYg65RLgqVtng7LvpFgev7mjR6MYWyqpump",
+    pool: "", // optional: leave empty to auto-detect the biggest pool
+    buy: c => `https://jup.ag/swap/SOL-${c}`,
+    explorer: c => `https://solscan.io/token/${c}`,
+    pump: c => `https://pump.fun/coin/${c}`,
+    embed: c => `https://dexscreener.com/solana/${c}?embed=1&theme=light&trades=0&info=0`
+  },
+  ton: {
+    network: "ton",
+    contract: "EQDu6NcfugE-0wKIit2dIMBIOhzMGHmDkk4_GzCoqHJ-IY5U",
+    pool: "",
+    buy: c => `https://app.ston.fi/swap?ft=TON&tt=${c}`,
+    explorer: c => `https://tonviewer.com/${c}`
+  }
+};
+
+const $ = id => document.getElementById(id);
+const state = { chain: "sol", range: "7d" };
+let chart, series;
+
+addEventListener("scroll", () => $("nav").classList.toggle("s", scrollY > 8), { passive: true });
+
+["sol", "ton"].forEach(k => {
+  const c = CFG[k];
+  $("ca-" + k).textContent = c.contract;
+  $("ex-" + k).href = c.explorer(c.contract);
+  $("buy-" + k).href = c.buy(c.contract);
+});
+
+// Pump.fun links
+const pumpUrl = CFG.sol.pump(CFG.sol.contract);
+$("pump-btn").href = pumpUrl;
+$("pump-ex").href = pumpUrl;
+$("pump-link").href = pumpUrl;
+
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(CFG[b.dataset.copy].contract); toast("Address copied"); }
+  catch { toast("Copy failed"); }
+}));
+function toast(t) {
+  const e = $("toast"); e.textContent = t; e.classList.add("show");
+  clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove("show"), 1700);
+}
+
+function fmtPrice(p) {
+  p = Number(p); if (!p) return "—";
+  if (p >= 1) return "$" + p.toLocaleString("en-US", { maximumFractionDigits: 4 });
+  if (p >= 0.01) return "$" + p.toFixed(5);
+  return "$" + p.toFixed(12).replace(/0+$/, "");
+}
+function fmtUsd(n) {
+  n = Number(n); if (!n) return "—";
+  if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
+  if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
+  if (n >= 1e3) return "$" + (n / 1e3).toFixed(1) + "K";
+  return "$" + n.toFixed(0);
+}
+
+function initChart() {
+  if (chart || !window.LightweightCharts) return;
+  chart = LightweightCharts.createChart($("chart"), {
+    autoSize: true,
+    layout: { background: { color: "#ffffff" }, textColor: "#6f6a86", fontFamily: "Inter, sans-serif" },
+    grid: { vertLines: { visible: false }, horzLines: { color: "#f3effd" } },
+    rightPriceScale: { borderVisible: false },
+    timeScale: { borderVisible: false, timeVisible: true },
+    crosshair: { vertLine: { color: "#cdbcff" }, horzLine: { color: "#cdbcff" } }
+  });
+  series = chart.addAreaSeries({
+    lineColor: "#6a2cff", lineWidth: 2,
+    topColor: "rgba(106,44,255,.2)", bottomColor: "rgba(106,44,255,0)",
+    priceFormat: { type: "price", precision: 10, minMove: 1e-10 }
+  });
+}
+function msg(t) {
+  let e = $("msg");
+  if (!e) { e = document.createElement("div"); e.className = "msg"; e.id = "msg"; $("chart").appendChild(e); }
+  e.textContent = t; e.style.display = "grid";
+}
+const hideMsg = () => { const e = $("msg"); if (e) e.style.display = "none"; };
+
+// Switch between our own chart and the DexScreener embed
+function showEmbed(on) {
+  const frame = $("embedFrame");
+  if (on && !frame.src) frame.src = CFG.sol.embed(CFG.sol.contract); // load only when needed
+  $("embed").classList.toggle("show", on);
+  $("chartBox").classList.toggle("hide", on);
+  $("rangeTabs").style.display = on ? "none" : "";
+}
+
+const API = "https://api.geckoterminal.com/api/v2/networks/";
+const RANGES = { "24h": ["minute", 15, 96], "7d": ["hour", 1, 168], "30d": ["day", 1, 30] };
+
+async function findPool(k) {
+  const c = CFG[k];
+  if (c.pool) return c.pool;
+  if (c._found) return c._found;
+  const r = await fetch(`${API}${c.network}/tokens/${c.contract}/pools?page=1`).then(x => x.json());
+  const a = r.data && r.data[0] && r.data[0].attributes && r.data[0].attributes.address;
+  if (!a) throw new Error("no pool");
+  return (c._found = a);
+}
+
+async function load() {
+  initChart();
+  const k = state.chain, c = CFG[k];
+  if (!$("embed").classList.contains("show")) msg("Loading chart…");
+  try {
+    if (!series) throw new Error("chart lib not loaded");
+    const pool = await findPool(k);
+    const [tf, agg, lim] = RANGES[state.range];
+    const base = `${API}${c.network}/pools/${pool}`;
+    const [o, p] = await Promise.all([
+      fetch(`${base}/ohlcv/${tf}?aggregate=${agg}&limit=${lim}`).then(r => r.json()),
+      fetch(base).then(r => r.json())
+    ]);
+    const list = ((o.data && o.data.attributes && o.data.attributes.ohlcv_list) || []).slice().sort((a, b) => a[0] - b[0]);
+    if (!list.length) throw new Error("no data");
+    if (k !== state.chain) return;
+    showEmbed(false);
+    series.setData(list.map(x => ({ time: x[0], value: +x[4] })));
+    chart.timeScale().fitContent();
+    hideMsg();
+    const a = p.data.attributes;
+    $("px").textContent = fmtPrice(a.base_token_price_usd);
+    const ch = parseFloat(a.price_change_percentage && a.price_change_percentage.h24);
+    const e = $("chg");
+    e.textContent = isNaN(ch) ? "" : (ch >= 0 ? "+" : "−") + Math.abs(ch).toFixed(2) + "% 24h";
+    e.className = "chg " + (ch >= 0 ? "up" : "dn");
+    $("s-liq").textContent = fmtUsd(a.reserve_in_usd);
+    $("s-vol").textContent = fmtUsd(a.volume_usd && a.volume_usd.h24);
+    $("s-fdv").textContent = fmtUsd(a.fdv_usd);
+  } catch (e) {
+    if (series) series.setData([]);
+    showEmbed(true); // fallback: DexScreener chart
+  }
+}
+
+function tabs(id, key, attr) {
+  document.querySelectorAll(`#${id} button`).forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(`#${id} button`).forEach(x => x.classList.remove("on"));
+    b.classList.add("on"); state[key] = b.dataset[attr]; load();
+  }));
+}
+tabs("rangeTabs", "range", "r");
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
